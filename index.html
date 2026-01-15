@@ -65,27 +65,60 @@
 
     <!-- Header -->
     <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <!-- Left: Logo and Title -->
-            <div class="flex items-center space-x-4">
-                <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors md:hidden">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
+        <div class="max-w-7xl mx-auto px-4 h-16">
+            <!-- Normal Header View (Desktop + Mobile) -->
+            <div id="normalHeader" class="h-full flex items-center justify-between">
+                <!-- Left: Logo and Title -->
                 <div class="flex items-center space-x-3">
                     <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-100 flex-shrink-0">
                         <img src="https://image.weversejapan.com/official/live/illit/contents/profile/8/add731b9278d40d58d2d9d254cb04413.jpg" alt="Minju" class="w-full h-full object-cover">
                     </div>
                     <span class="font-eng text-lg font-semibold tracking-wide">MINJU TIMELINE</span>
                 </div>
+
+                <!-- Center: Search Bar (Desktop only) -->
+                <div class="hidden md:flex flex-1 max-w-2xl mx-8">
+                    <div class="relative w-full">
+                        <input
+                            id="searchInput"
+                            type="text"
+                            placeholder="タイムラインを検索..."
+                            class="w-full px-4 py-2 pl-10 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <button id="clearSearch" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Search Button (Mobile only) + About Button -->
+                <div class="flex items-center space-x-2">
+                    <button id="mobileSearchButton" class="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </button>
+                    <button id="aboutButton" class="px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors font-medium text-gray-700">
+                        About
+                    </button>
+                </div>
             </div>
 
-            <!-- Center: Search Bar -->
-            <div class="hidden md:flex flex-1 max-w-2xl mx-8">
-                <div class="relative w-full">
+            <!-- Mobile Search View -->
+            <div id="mobileSearchView" class="h-full hidden items-center md:hidden">
+                <button id="closeMobileSearch" class="p-2 hover:bg-gray-100 rounded-lg transition-colors mr-2">
+                    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <div class="relative flex-1">
                     <input
-                        id="searchInput"
+                        id="mobileSearchInput"
                         type="text"
                         placeholder="タイムラインを検索..."
                         class="w-full px-4 py-2 pl-10 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -93,19 +126,12 @@
                     <svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
-                    <button id="clearSearch" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
+                    <button id="clearMobileSearch" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
                 </div>
-            </div>
-
-            <!-- Right: About Button -->
-            <div class="flex items-center space-x-2">
-                <button id="aboutButton" class="px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors font-medium text-gray-700">
-                    About
-                </button>
             </div>
         </div>
     </header>
@@ -358,13 +384,20 @@
     <!-- 検索機能スクリプト -->
     <script>
         const searchInput = document.getElementById('searchInput');
+        const mobileSearchInput = document.getElementById('mobileSearchInput');
         const clearButton = document.getElementById('clearSearch');
+        const clearMobileButton = document.getElementById('clearMobileSearch');
         const timelineItems = document.querySelectorAll('.timeline-item');
         const noResults = document.getElementById('noResults');
 
+        // モバイル検索UI要素
+        const mobileSearchButton = document.getElementById('mobileSearchButton');
+        const closeMobileSearch = document.getElementById('closeMobileSearch');
+        const normalHeader = document.getElementById('normalHeader');
+        const mobileSearchView = document.getElementById('mobileSearchView');
+
         // 検索機能
-        function performSearch() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
+        function performSearch(searchTerm) {
             let visibleCount = 0;
 
             // 検索語が空の場合は全て表示
@@ -373,6 +406,7 @@
                     item.style.display = 'flex';
                 });
                 clearButton.classList.add('hidden');
+                clearMobileButton.classList.add('hidden');
                 noResults.classList.add('hidden');
                 return;
             }
@@ -395,7 +429,10 @@
             });
 
             // クリアボタンの表示
-            clearButton.classList.remove('hidden');
+            if (searchTerm !== '') {
+                clearButton.classList.remove('hidden');
+                clearMobileButton.classList.remove('hidden');
+            }
 
             // 検索結果なしメッセージの表示/非表示
             if (visibleCount === 0) {
@@ -405,30 +442,63 @@
             }
         }
 
-        // クリア機能
-        function clearSearch() {
-            searchInput.value = '';
-            performSearch();
-        }
+        // デスクトップ検索の入力イベント
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            mobileSearchInput.value = searchInput.value; // 同期
+            performSearch(searchTerm);
+        });
 
-        // イベントリスナー
-        searchInput.addEventListener('input', performSearch);
+        // モバイル検索の入力イベント
+        mobileSearchInput.addEventListener('input', () => {
+            const searchTerm = mobileSearchInput.value.toLowerCase().trim();
+            searchInput.value = mobileSearchInput.value; // 同期
+            performSearch(searchTerm);
+        });
+
+        // Escキーでクリア
         searchInput.addEventListener('keyup', (e) => {
             if (e.key === 'Escape') {
-                clearSearch();
+                searchInput.value = '';
+                mobileSearchInput.value = '';
+                performSearch('');
             }
         });
-        clearButton.addEventListener('click', clearSearch);
 
-        // モバイル用検索ボタン（オプション）
-        const mobileSearchButtons = document.querySelectorAll('button svg');
-        mobileSearchButtons.forEach(button => {
-            const path = button.querySelector('path[d*="21 21l-6-6"]');
-            if (path) {
-                button.parentElement.addEventListener('click', () => {
-                    searchInput.focus();
-                });
+        mobileSearchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                mobileSearchInput.value = '';
+                performSearch('');
             }
+        });
+
+        // クリアボタン
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            mobileSearchInput.value = '';
+            performSearch('');
+        });
+
+        clearMobileButton.addEventListener('click', () => {
+            searchInput.value = '';
+            mobileSearchInput.value = '';
+            performSearch('');
+        });
+
+        // モバイル検索ビューの切り替え
+        mobileSearchButton.addEventListener('click', () => {
+            normalHeader.classList.add('hidden');
+            mobileSearchView.classList.remove('hidden');
+            mobileSearchView.classList.add('flex');
+            // 検索入力欄にフォーカス
+            setTimeout(() => mobileSearchInput.focus(), 100);
+        });
+
+        closeMobileSearch.addEventListener('click', () => {
+            mobileSearchView.classList.remove('flex');
+            mobileSearchView.classList.add('hidden');
+            normalHeader.classList.remove('hidden');
         });
     </script>
 
