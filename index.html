@@ -78,6 +78,15 @@
             left: 0;
             color: #666;
         }
+
+        /* Line clamp utility */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -207,6 +216,40 @@
 
         <!-- Timeline container -->
         <div class="relative timeline-line pl-2 md:pl-4 space-y-12">
+
+            <!-- Item 7: 202601 -->
+            <div class="timeline-item relative z-10 flex items-start group" data-date="2026.01" data-content="marie claire exclusive interview MINJU will make it magazine editorial photoshoot">
+                <!-- Image Circle -->
+                <div class="flex-shrink-0 w-[60px] h-[60px] rounded-full border-4 border-white shadow-md overflow-hidden bg-gray-200 z-10 relative">
+                    <img src="https://placehold.co/100x100/9bf6ff/ffffff?text=Jan" alt="January Image" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                </div>
+                <!-- Content -->
+                <div class="ml-6 mt-1 flex-1">
+                    <div class="flex flex-col sm:flex-row sm:items-baseline mb-2">
+                        <span class="font-eng text-2xl font-bold text-cyan-400 mr-3">2026.01</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                        <p class="text-gray-700 leading-relaxed font-medium">
+                            marie claire's Exclusive Interview [MINJU will make it!]
+                        </p>
+                        <!-- OGP Card -->
+                        <a href="https://www.marieclairekorea.com/celebrity/2026/01/illit-minju-editorial/" target="_blank" rel="noopener noreferrer" class="block mt-4 no-underline">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white">
+                                <!-- Image Container -->
+                                <div class="relative w-full bg-gray-100" style="padding-bottom: 42.55%;">
+                                    <img src="https://img.marieclairekorea.com//2025/12/mck_6943a4aa8ba39-940x400.jpg" alt="STARLIT | ILLIT Minju Editorial and Interview" class="absolute top-0 left-0 w-full h-full object-cover" loading="lazy">
+                                </div>
+                                <!-- Text Content -->
+                                <div class="p-4">
+                                    <div class="text-xs text-gray-500 mb-2 uppercase font-medium">Marie Claire Korea</div>
+                                    <h3 class="text-base font-semibold text-gray-900 mb-2 line-clamp-2">STARLIT | 아일릿 민주 화보와 인터뷰</h3>
+                                    <p class="text-sm text-gray-600 line-clamp-2">"나의 무한한 가능성을 믿으면서 나아가면 스스로 좀 더 성장할 수 있는 것 같아요." 내 안의 빛을 여러 결로 펼쳐내는 여정.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <!-- Item 6: 202512 -->
             <div class="timeline-item relative z-10 flex items-start group" data-date="2025.12" data-content="First-ever MC role at KBS Gayo Daechukje year-end festival">
