@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wolftatsu.github.io/minjutimeline/sitemap.xml
